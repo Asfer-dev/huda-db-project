@@ -12,6 +12,7 @@ import AdminProduct from "./components/adminProduct";
 import Cart from "./components/cart";
 import { ProductProvider } from "./components/context/productContext";
 import Categories from "./components/Categories";
+import FilteredProducts from "./components/FilteredProducts";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/product" element={<Product />} />
+            <Route path="/product/:categoryId" element={<FilteredProducts />} />
             <Route path="/addProduct" element={<AddProduct />} />
             <Route path="/editProduct/:id" element={<EditProduct />} />
             <Route path="/productDetails/:id" element={<ProductDetails />} />

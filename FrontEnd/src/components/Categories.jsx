@@ -22,7 +22,7 @@ const Categories = () => {
       <ul>
         {categories?.map((category) => (
           <li>
-            <Link to={"/product?category=" + category.CategoryId}>
+            <Link to={"/product/" + category.CategoryId}>
               {category.CategoryName}
             </Link>
           </li>
