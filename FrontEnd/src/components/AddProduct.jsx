@@ -1,10 +1,23 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const { register, handleSubmit } = useForm();
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/categories")
+      .then((res) => {
+        const categoriesData = res.data;
+
+        setCategories(categoriesData);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const navigate = useNavigate();
 
@@ -32,6 +45,19 @@ const AddProduct = () => {
         name="name"
         {...register("name", { required: true, maxLength: 20 })}
       />
+      <br />
+
+      <label htmlFor="category">category: </label>
+
+      <select
+        id="category"
+        name="category"
+        {...register("category", { required: true, maxLength: 20 })}
+      >
+        {categories?.map((category) => (
+          <option value={category.CategoryId}>{category.CategoryName}</option>
+        ))}
+      </select>
       <br />
 
       <label htmlFor="price">price: </label>

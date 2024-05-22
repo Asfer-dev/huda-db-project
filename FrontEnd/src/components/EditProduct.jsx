@@ -10,6 +10,19 @@ const EditProduct = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
 
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/categories")
+      .then((res) => {
+        const categoriesData = res.data;
+
+        setCategories(categoriesData);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   useEffect(() => {
     axios
       .get(`http://localhost:5000/Products/${id}`)
@@ -72,6 +85,19 @@ const EditProduct = () => {
           type="text"
           {...register("name", { required: true, maxLength: 20 })}
         />
+        <label htmlFor="category">category: </label>
+
+        <select
+          id="category"
+          name="category"
+          {...register("category", { required: true, maxLength: 20 })}
+        >
+          {categories?.map((category) => (
+            <option value={category.CategoryId}>{category.CategoryName}</option>
+          ))}
+        </select>
+        <br />
+
         <label htmlFor="price">Price:</label>
         <input
           id="price"

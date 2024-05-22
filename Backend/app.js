@@ -68,9 +68,9 @@ app.get("/Products", async (req, res) => {
 
 // Products route - POST
 app.post("/Products", async (req, res) => {
-  const { id, name, price, img } = req.body;
+  const { id, name, category, price, img } = req.body;
   if (name && price) {
-    const newProduct = await addProduct(id, name, price, img);
+    const newProduct = await addProduct(id, name, category, price, img);
     res.status(201).send(newProduct);
   } else {
     res.status(400).send("Invalid product data");
@@ -92,10 +92,17 @@ app.get("/Products/:id", async (req, res) => {
 // Products route - PUT by ID
 app.put("/Products/:id", async (req, res) => {
   const prevId = req.params.id;
-  const { id, name, price, img } = req.body;
+  const { id, name, category, price, img } = req.body;
   const product = await getProduct(id);
   if (product) {
-    const updatedProduct = await editProduct(prevId, id, name, price, img);
+    const updatedProduct = await editProduct(
+      prevId,
+      id,
+      name,
+      category,
+      price,
+      img
+    );
     res.send(updatedProduct);
   } else {
     res.status(404).send("Product not found");
@@ -128,7 +135,7 @@ app.get("/categories/:id", async (req, res) => {
   }
 });
 
-// Categories route - GET by ID
+// Carts route - GET by ID
 app.get("/carts", async (req, res) => {
   const cart = await getCart(req.query.userId);
   res.send(cart);

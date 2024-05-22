@@ -38,6 +38,11 @@ const Product = () => {
       <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
         Admin Dashboard
       </h1>
+      <div className="mb-4">
+        <Link className="addproduct-btn" to={"/addProduct"}>
+          Add new product
+        </Link>
+      </div>
       <div className="products-container">
         {products.map((product) => (
           <div key={product.id} className="product-card">
@@ -64,7 +69,7 @@ const Product = () => {
                   to={`/productDetails/${product.id}`}
                   style={{ textDecoration: "none", color: "#fff" }}
                 >
-                  View Details
+                  Details
                 </Link>
               </button>
               <button
