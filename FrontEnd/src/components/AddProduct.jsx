@@ -17,7 +17,7 @@ const AddProduct = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className="product-form" onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="id">id: </label>
       <input
         id="id"

@@ -54,7 +54,10 @@ const EditProduct = () => {
   return (
     <div>
       <h2>Edit Product</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="edit-product-form">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="edit-product-form product-form"
+      >
         <label htmlFor="id">ID:</label>
         <input
           id="id"
