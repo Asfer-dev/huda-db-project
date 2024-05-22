@@ -15,37 +15,30 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = (data) => {
-    // sessionStorage.setItem("adminId", 123);
-    // sessionStorage.setItem("adminName", "john");
-    // sessionStorage.setItem("adminEmail", "john.doe@example.com");
-    // navigate("/adminProduct");
     axios
-      .get(`http://localhost:5000/Users?email=${data.email}`)
+      .get(`http://localhost:5000/Admin?email=${data.email}`)
       .then((res) => {
-        if (res.data) {
-          const admin = res.data;
+        const admin = res.data;
+        if (admin && admin.password === data.password) {
           sessionStorage.setItem("adminId", admin.id);
           sessionStorage.setItem("adminName", admin.email);
           sessionStorage.setItem("adminEmail", admin.email);
           navigate("/adminProduct");
         } else {
-          // axios
-          //   .get(
-          //     `http://localhost:5000/Users?email=${data.email}`
-          //   )
-          //   .then((res) => {
-          //     const user = res.data.find((d) => d.email === data.email);
-          //     if (user) {
-          //       sessionStorage.setItem("userId", user.id);
-          //       sessionStorage.setItem("userName", user.name);
-          //       sessionStorage.setItem("userEmail", user.email);
-          //       navigate("/product");
-          //     } else {
-          //       throw new Error("User not found");
-          //     }
-          //   })
-          //   .catch((err) => console.log(err));
-          throw new Error("User not found");
+          axios
+            .get(`http://localhost:5000/Users?email=${data.email}`)
+            .then((res) => {
+              const user = res.data;
+              if (user && user.password === data.password) {
+                sessionStorage.setItem("userId", user.id);
+                sessionStorage.setItem("userName", user.name);
+                sessionStorage.setItem("userEmail", user.email);
+                navigate("/product");
+              } else {
+                throw new Error("User not found");
+              }
+            })
+            .catch((err) => console.log(err));
         }
       })
       .catch((err) => console.log(err));

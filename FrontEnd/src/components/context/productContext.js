@@ -19,8 +19,14 @@ export const ProductProvider = ({ children }) => {
       .then((res) => {
         const productData = res.data;
         const newData = productData.map((product) => {
-          const { ProductId: id, ProductName: name, MRP: price, img } = product;
-          return { id, name, price, img };
+          const {
+            ProductId: id,
+            ProductName: name,
+            MRP: price,
+            img,
+            CategoryID,
+          } = product;
+          return { id, name, price, img, CategoryID };
         });
         setProducts(newData);
       })

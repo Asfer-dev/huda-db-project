@@ -11,6 +11,7 @@ import Registeration from "./components/Registeration";
 import AdminProduct from "./components/adminProduct";
 import Cart from "./components/cart";
 import { ProductProvider } from "./components/context/productContext";
+import Categories from "./components/Categories";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/productDetails/:id" element={<ProductDetails />} />
             <Route path="/registeration" element={<Registeration />} />
             <Route path="/adminProduct" element={<AdminProduct />} />
+            <Route path="/categories" element={<Categories />} />
 
             <Route path="/cartItems" element={<Cart />} />
             <Route path="/registration" element={<Registeration />} />

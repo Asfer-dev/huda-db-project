@@ -92,3 +92,62 @@ export const getUser = async (email) => {
   const user = result[0][0];
   return user;
 };
+
+export const addAdmin = async (email, password) => {
+  const result = await pool.query(
+    "INSERT INTO admin (email, password) VALUES ('" +
+      email +
+      "', '" +
+      password +
+      "')"
+  );
+  console.log(result);
+  return getAdmin(email);
+};
+
+export const getAdmin = async (email) => {
+  const result = await pool.query(
+    "select * from admin WHERE email='" + email + "'"
+  );
+  const admin = result[0][0];
+  return admin;
+};
+
+export const getCart = async (userId) => {
+  const result = await pool.query(
+    "select * from cart WHERE userId='" + userId + "'"
+  );
+  return result[0][0];
+};
+export const getCartItem = async (userId, prodId) => {
+  const result = await pool.query(
+    "select * from cart WHERE userId='" +
+      userId +
+      "' and Product_ProductId='" +
+      prodId +
+      "'"
+  );
+  return result[0][0];
+};
+
+export const addToCart = async (userId, prodId) => {
+  const result = await pool.query(
+    "INSERT INTO cart (userId, Product_ProductId, quantity) VALUES ('" +
+      userId +
+      "', '" +
+      prodId +
+      "', 1)"
+  );
+  return getCartItem(userId, prodId);
+};
+
+export const updateCart = async (userId, prodId) => {
+  const result = await pool.query(
+    "UPDATE FROM cart SET quantity = quantity + 1 WHERE userId='" +
+      userId +
+      "' + Product_ProductId='" +
+      prodId +
+      "'"
+  );
+  return getCartItem(userId, prodId);
+};

@@ -2,11 +2,12 @@ import express from "express";
 import {
   addProduct,
   addUser,
-  // authenticateUser,
   deleteProduct,
   editProduct,
+  getAdmin,
   getAllCategories,
   getAllProducts,
+  getCart,
   getCategory,
   getProduct,
   getUser,
@@ -28,13 +29,12 @@ let currentProductId = 1;
 
 // Admin route
 app.get("/Admin", async (req, res) => {
-  // const { email, password } = req.query;
-  // Example: Authenticate admin user
-  // const user = await authenticateUser(email, password);
-  // if (user) {
-  //   res.send("Admin authenticated");
+  const { email } = req.query;
+  const admin = await getAdmin(email);
+  res.send(admin);
+  // if (admin) {
   // } else {
-  //   res.status(401).send("Unauthorized");
+  //   res.status(404).send("Admin not found");
   // }
 });
 
@@ -126,6 +126,16 @@ app.get("/categories/:id", async (req, res) => {
   } else {
     res.status(404).send("Category not found");
   }
+});
+
+// Categories route - GET by ID
+app.get("/carts", async (req, res) => {
+  const cart = await getCart(req.query.userId);
+  res.send(cart);
+  // if (cart) {
+  // } else {
+  //   res.status(404).send("Cart not found");
+  // }
 });
 
 // Middleware to log requests

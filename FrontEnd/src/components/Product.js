@@ -1,14 +1,27 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Product.css";
 import { ProductContext } from "./context/productContext";
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 const Product = () => {
   const userId = sessionStorage.getItem("userId");
-  const { products, setCartItems } = useContext(ProductContext);
+  const { products, setProducts, setCartItems } = useContext(ProductContext);
   const [search, setSearch] = useState("");
+  const categoryId = useQuery().get("category");
 
+  useEffect(() => {
+    if (categoryId) {
+      const filteredProducts = products?.filter((product) => {
+        return product.CategoryID === categoryId;
+      });
+      console.log(filteredProducts);
+      setProducts([{ filteredProducts }]);
+    }
+  }, [categoryId]);
   // const filterProducts = products.filter((item)=>{
   //   return(
   //     item.name.toLowerCase().includes(search.toLowerCase())||
@@ -87,13 +100,13 @@ const Product = () => {
           paddingLeft: "70px",
         }}
       >
-        <span style={{ marginRight: "10px" }}>Search: </span>
+        {/* <span style={{ marginRight: "10px" }}>Search: </span>
         <input
           type="text"
           placeholder="search......."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-        />
+        /> */}
       </div>
 
       <br />
